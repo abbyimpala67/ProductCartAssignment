@@ -6,6 +6,7 @@ import Products from "../pages/Products";
 const Main = () => {
   return (
     <MainWrapper>
+      <Products/>
       <Switch>
         <Route exact path={"/shopping-cart/products"} component={Products} />
       </Switch>
