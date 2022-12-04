@@ -31,7 +31,7 @@ const ProductCard = ({ id, title, price, image, category, description }) => {
         <ImageContainer
           onClick={showProductDetails}
           style={{ cursor: "pointer" }}
-          title={"Click to view product details"}
+          title={"Click on product image view details"}
         >
           <Image src={image} alt={title} />
         </ImageContainer>
