@@ -1,32 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Button from "../../components/elements/Button";
 import { addToCart } from "../../state/actions/cart";
-
-const ProductCard = ({ id, title, price, image, category }) => {
-  const product = { id, title, price, image, category };
+import Modal from "react-modal";
+const ProductCard = ({ id, title, price, image, category, description }) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const product = { id, title, price, image, category, description };
   const dispatch = useDispatch();
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+  const showProductDetails = () => {
+    console.log("open product details");
+    setIsOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
-    <ProductCardWrapper>
-      <ImageContainer>
-        <Image src={image} alt={title} />
-      </ImageContainer>
-      <Details>
-        <Info>
-          <Title>{title}</Title>
-          <div>${price.toFixed(2)}</div>
-        </Info>
-        <Button
-          onClick={() => dispatch(addToCart(product))}
-          content="Add to cart"
-          size="wide"
-          color="dark"
-          animation="color"
-        />
-      </Details>
-    </ProductCardWrapper>
+    <>
+      <ProductCardWrapper>
+        <ImageContainer
+          onClick={showProductDetails}
+          style={{ cursor: "pointer" }}
+          title={"Click to view product details"}
+        >
+          <Image src={image} alt={title} />
+        </ImageContainer>
+        <Details>
+          <Info>
+            <Title>{title}</Title>
+            <div>${price.toFixed(2)}</div>
+          </Info>
+          <Button
+            onClick={() => dispatch(addToCart(product))}
+            content="Add to cart"
+            size="wide"
+            color="dark"
+            animation="color"
+          />
+        </Details>
+      </ProductCardWrapper>
+      <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="View Product Details"
+      >
+        <ProductCardWrapper>
+          <ImageContainer>
+            <Image src={image} alt={title} />
+          </ImageContainer>
+          <Details>
+            <Info>
+              <Title>{title}</Title>
+              <div>${price.toFixed(2)}</div>
+              <div>{description}</div>
+            </Info>
+            <Button
+              onClick={() => dispatch(addToCart(product))}
+              content="Add to cart"
+              size="wide"
+              color="dark"
+              animation="color"
+            />
+          </Details>
+        </ProductCardWrapper>
+      </Modal>
+    </>
   );
 };
 
