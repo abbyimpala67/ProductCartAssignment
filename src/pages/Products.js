@@ -15,7 +15,8 @@ const Products = () => {
   }, []);
 
   const loadProducts = async () => {
-    dispatch(setProducts(filterProducts(await fetchProducts())));
+    // dispatch(setProducts(filterProducts(await fetchProducts())));
+    dispatch(setProducts(await fetchProducts()));
   };
 
   const fetchProducts = async () => {
@@ -25,13 +26,13 @@ const Products = () => {
     return data;
   };
 
-  const filterProducts = (products) => {
-    return products.filter(
-      (product) =>
-        product.category === `men's clothing` ||
-        product.category === `women's clothing`
-    );
-  };
+  // const filterProducts = (products) => {
+  //   return products.filter(
+  //     (product) =>
+  //       product.category === `men's clothing` ||
+  //       product.category === `women's clothing`
+  //   );
+  // };
 
   const productCards = products.map((product) => (
     <ProductCard
